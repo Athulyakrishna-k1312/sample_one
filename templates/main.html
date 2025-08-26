@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartoon Effect Tool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f6f9;
+      background: linear-gradient(to right, #976ce7, #e42d27);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Header */
+    header {
+      background: #000000;
+      background: linear-gradient(to right, #e42d27,#976ce7);
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h2 {
+      margin: 0;
+    }
+    .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      color: #c0450c;
+    }
+
+    /* Main Content */
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .upload-box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      border-style: dotted black;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    input[type="file"] {
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #4108c5;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+
+    /* Preview */
+    #preview {
+      margin-top: 20px;
+      max-width: 300px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+  <!-- Header -->
+  <header>
+    <h2>Cartoon Effect Tool</h2>
+    <div class="profile-icon" onclick="goToProfile()">👤</div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="upload-box">
+      <h3>Upload your image</h3>
+      <input type="file" id="imageInput" accept="image/*">
+      <br>
+      <button onclick="applyCartoon()">Apply Cartoon Effect</button>
+      <div>
+        <img id="preview" src="" alt="Preview will appear here">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Preview uploaded image
+    document.getElementById("imageInput").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById("preview").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Dummy apply cartoon effect function
+    function applyCartoon() {
+      alert("Cartoon effect will be applied (Backend needed here)");
+    }
+
+    // Redirect to profile page
+    function goToProfile() {
+      window.location.href = "/profile"; // Flask will handle this route
+    }
+  </script>
+
+</body>
+</html>
+
+
+ 
